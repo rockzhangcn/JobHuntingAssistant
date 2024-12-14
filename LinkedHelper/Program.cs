@@ -23,11 +23,16 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowOrigin",
-        builder => builder.WithOrigins("http://localhost:3000", "http://192.168.1.234:3000")
-                          .AllowAnyMethod()
-                          .AllowAnyHeader()
-                          .AllowCredentials());
+    // options.AddPolicy("AllowOrigin",
+    //     builder => builder.WithOrigins("http://localhost:3000", "http://192.168.1.234:3000")
+    //                       .AllowAnyMethod()
+    //                       .AllowAnyHeader()
+    //                       .AllowCredentials());
+
+                           options.AddPolicy("AllowAll", // 自定义策略名称
+        builder => builder.AllowAnyOrigin() // 允许所有来源
+                          .AllowAnyMethod() // 允许所有 HTTP 方法
+                          .AllowAnyHeader()); // 允许所有请求头
 });
 
 var app = builder.Build();

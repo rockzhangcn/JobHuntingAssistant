@@ -3,7 +3,14 @@
   "name": "JobApplyHelper",
   "version": "1.0",
   "description": "Extract position information that needed in a cover letter.",
-  "permissions": ["activeTab", "scripting", "downloads", "declarativeContent"],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads",
+    "declarativeContent",
+    "tabs",
+    "background"
+  ],
   "background": {
     "service_worker": "background.js"
   },
@@ -12,18 +19,31 @@
       "matches": [
         "https://www.linkedin.com/",
         "https://linkedin.com/",
-        "https://manyouglobal.com/"
+        "https://manyouglobal.com/",
+        "http://localhost:5218/"
       ],
       "js": ["content.js"],
-      "run_at": "document_end"
+      "run_at": "document_end",
+      "all_frames": true
     }
   ],
   "host_permissions": [
     "https://www.linkedin.com/",
     "https://linkedin.com/",
-    "https://manyouglobal.com/"
+    "https://manyouglobal.com/",
+    "http://localhost:5218/*"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+
+  "action": {
+    "default_title": "My Extension",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
   }
 }

@@ -23,30 +23,85 @@ async function commitInfo() {
   //     hireManager,
   //     cityName.innerText
   //   );
-  //   console.log(
-  //     "Rockzhang We get companyName " +
-  //       companyName.innerText +
-  //       " posistion name " +
-  //       positionName.innerText +
-  //       " city name " +
-  //       cityName.innerText +
-  //       " hiring manager " +
-  //       hireManager
-  //   );
+  console.log(
+    "Rockzhang We get companyName " +
+      companyName.innerText +
+      " posistion name " +
+      positionName.innerText +
+      " city name " +
+      cityName.innerText +
+      " hiring manager " +
+      hireManager
+  );
 
+  const data = {
+    company: companyName.innerText,
+    position: positionName.innerText,
+    manager: hireManager,
+    city: cityName.innerText,
+  };
+
+  chrome.runtime.sendMessage(
+    { action: "sendData", payload: data },
+    (response) => {
+      console.log("Background script response:", response);
+    }
+  );
   console.log("We run start to commit  message");
 }
 
-const observer = new MutationObserver(() => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "receiveBlob") {
+    const { buffer, mimeType, name } = message;
+    console.log(
+      "Rockzhang receivedBlob with buffer size ",
+      buffer.byteLength,
+      " mimeType ",
+      mimeType
+    );
+    if (Array.isArray(buffer)) {
+      const arrayBuffer = new Uint8Array(buffer).buffer; // Reconstruct the ArrayBuffer
+      console.log(
+        "Reconstructed ArrayBuffer byteLength:",
+        arrayBuffer.byteLength
+      );
+
+      // Reconstruct Blob
+      const blob = new Blob([arrayBuffer], { type: mimeType });
+      const blobUrl = URL.createObjectURL(blob);
+
+      // Trigger download
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = "RockZhang_CoverLetter_" + name + ".pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+
+      sendResponse({
+        success: true,
+        message: "Blob processed and file downloaded!",
+      });
+    } else {
+      console.error("Invalid buffer format received.");
+      sendResponse({ success: false, error: "Invalid buffer format." });
+    }
+
+    return true; // Allow async response
+  }
+});
+
+const observer1 = new MutationObserver(() => {
   let container = document.querySelector("#LinkedinHelper");
   if (!container) {
     createUI();
-    console.warn("ROCK UI created.");
+    console.log("ROCK UI created.");
   }
 });
 
 // 开始监听页面的 DOM 变化
-observer.observe(document.body, { childList: true, subtree: true });
+observer1.observe(document.body, { childList: true, subtree: true });
 
 function createUI() {
   let container = document.querySelector("#LinkedinHelper");
@@ -97,6 +152,7 @@ function createUI() {
 
     button.addEventListener("click", async () => {
       await commitInfo();
+      //alert("Menu " + value + " is clicked.");
     });
 
     divContainer.appendChild(button);
