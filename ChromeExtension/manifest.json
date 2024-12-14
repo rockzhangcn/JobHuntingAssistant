@@ -9,10 +9,21 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.linkedin.com/", "https://manyouglobal.com/"],
+      "matches": [
+        "https://www.linkedin.com/",
+        "https://linkedin.com/",
+        "https://manyouglobal.com/"
+      ],
       "js": ["content.js"],
       "run_at": "document_end"
     }
   ],
-  "host_permissions": ["https://www.linkedin.com/", "https://manyouglobal.com/"]
+  "host_permissions": [
+    "https://www.linkedin.com/",
+    "https://linkedin.com/",
+    "https://manyouglobal.com/"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
 }
