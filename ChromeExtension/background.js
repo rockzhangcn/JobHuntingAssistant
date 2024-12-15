@@ -15,6 +15,15 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log("We are running here in background.js");
 });
 
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === "complete" && tab.url.includes("linkedin.com")) {
+    chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      files: ["content.js"],
+    });
+  }
+});
+
 chrome.action.onClicked.addListener((tab) => {
   if (tab.url && tab.url.includes("linkedin.com")) {
     console.log("Injecting script into:", tab.url);

@@ -17,12 +17,7 @@ async function commitInfo() {
     "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(2) > div > div > div > div.hirer-card__hirer-information > a > span > span:nth-child(1) > strong"
   );
   hireManager = hireManager ? hireManager.innerText : "Hiring Manager";
-  //   await requestPdf(
-  //     companyName.innerText,
-  //     positionName.innerText,
-  //     hireManager,
-  //     cityName.innerText
-  //   );
+
   console.log(
     "Rockzhang We get companyName " +
       companyName.innerText +
