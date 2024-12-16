@@ -16,16 +16,22 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.status === "complete" && tab.url.includes("linkedin.com")) {
-    chrome.scripting.executeScript({
-      target: { tabId: tabId },
-      files: ["content.js"],
-    });
+  if (
+    changeInfo.status === "complete" &&
+    tab.url.includes("linkedin.com/jobs")
+  ) {
+    chrome.scripting.executeScript(
+      {
+        target: { tabId },
+        files: ["content.js"],
+      },
+      () => console.log("Script injected once.")
+    );
   }
 });
 
 chrome.action.onClicked.addListener((tab) => {
-  if (tab.url && tab.url.includes("linkedin.com")) {
+  if (tab.url && tab.url.includes("linkedin.com/jobs")) {
     console.log("Injecting script into:", tab.url);
     chrome.scripting.executeScript({
       target: { tabId: tab.id },

@@ -76,22 +76,32 @@ app.MapPost("/position_info",  async (HttpContext httpContext) =>
     var company = "null";
     var hiringNanager = "Hiring Manager";
     var city = "Auckland";
+    var templateNo = 1;
     //TODO removed after client get correct logics.
     try {
         position = jsonData.GetProperty("position").GetString();
         company = jsonData.GetProperty("company").GetString();
         hiringNanager = jsonData.GetProperty("manager").GetString();
         city = jsonData.GetProperty("city").GetString();
+        templateNo = jsonData.GetProperty("templateNo").GetInt32();
     } catch (KeyNotFoundException) {
         Console.WriteLine("Key Now Found in the post data");
     }
+
+    string[] segments = city.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+    for (int i = 0; i < segments.Length; i++)
+    {
+        segments[i] = segments[i].Trim(); // 去掉首尾空格
+    }
+
+    city = string.Join(", ", new HashSet<string>(segments));
 
     string todayDate = DateTime.Now.ToString("MMM dd, yyyy");
 
     Console.WriteLine($"We get information position:\"{position}\", company:\"{company}\", name:\"{hiringNanager}\"");
     
-    string inputPath = "CoverLetter_template.docx";
-    string outputDocPath = "CoverLetter_fit.docx";
+    string inputPath = $"CoverLetter_template_{templateNo}.docx";
+    string outputDocPath = $"CoverLetter_fit_{templateNo}.docx";
     
     File.Copy(inputPath, outputDocPath, true);
     using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(outputDocPath, true))
@@ -137,7 +147,7 @@ app.MapPost("/position_info",  async (HttpContext httpContext) =>
     Console.WriteLine($"Modified {inputPath} saved to: {outputDocPath}");
     // 定义要执行的命令和参数
     
-    string outputPdfPath = "CoverLetter_fit.pdf";
+    string outputPdfPath = $"CoverLetter_fit_{templateNo}.pdf";
 
     string command = $"libreoffice --headless --convert-to pdf {outputDocPath} --outdir .";
 
@@ -170,24 +180,11 @@ app.MapPost("/position_info",  async (HttpContext httpContext) =>
     if (!string.IsNullOrEmpty(error))
         Console.WriteLine($"Error:\n{error}");
 
-
-    // httpContext.Response.ContentType = "application/pdf";
-    // httpContext.Response.Headers.Add("Content-Disposition", $"attachment; filename={outputPdfPath}");
-
-    // // 返回文件
-    // await  httpContext.Response.SendFileAsync(outputPdfPath);
     Console.WriteLine("Begin to download");
      // Code path below returns a value
     var fileBytes = await File.ReadAllBytesAsync(outputPdfPath);
     return Results.File(fileBytes, "application/pdf", outputPdfPath);
-    // // 获取文件内容类型（MIME 类型）
-    // var mimeType = "text/plain"; // 或根据需要替换为其他 MIME 类型
 
-    // // 读取文件字节
-    // var fileBytes = File.ReadAllBytes(outputDocPath);
-
-    // // 返回文件作为响应
-    // return File(fileBytes, mimeType, outputDocPath);
 
 }).WithOpenApi();
 
