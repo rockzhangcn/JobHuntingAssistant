@@ -1,0 +1,2 @@
+#sudo apt-get install pdftk
+pdftk document.pdf RockZhang_CV_fullstack.pdf  cat output merged.pdf
