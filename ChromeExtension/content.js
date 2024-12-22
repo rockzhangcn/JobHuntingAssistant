@@ -49,9 +49,68 @@ if (window.hasLinkedExtensionRun) {
   console.log("Rockzhang Content script successfully injected.");
 }
 
+async function commitInfo(templateNo) {
+  let hostName = document.location.hostname;
+  if (hostName.indexOf("seek.co") !== -1) {
+    commitInfoSeek(templateNo);
+  } else if (hostName.indexOf("linkedin.com") !== -1) {
+    await commitInfoLinkedIn(templateNo);
+  }
+}
+
+async function commitInfoSeek(templateNo) {
+  let companyName = document.querySelector(
+    "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div > button > span"
+  );
+
+  let positionName = document.querySelector(
+    "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > h1 > a"
+  );
+
+  let cityName = document.querySelector(
+    "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div > div:nth-child(1) > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwb7 > div > span"
+  );
+
+  // let jobDesc = document.querySelector(
+  //   "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw77 > section:nth-child(2) > div > div > div"
+  // );
+
+  let hireManager = document.querySelector(
+    "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(2) > div > div > div > div.hirer-card__hirer-information > a > span > span:nth-child(1) > strong"
+  );
+  hireManager = hireManager ? hireManager.innerText : "Hiring Manager";
+
+  console.log(
+    "Rockzhang We get companyName " +
+      companyName.innerText +
+      " posistion name " +
+      positionName.innerText +
+      " city name " +
+      cityName.innerText +
+      " hiring manager " +
+      hireManager
+  );
+
+  const data = {
+    company: companyName.innerText,
+    position: positionName.innerText,
+    manager: hireManager,
+    city: cityName.innerText,
+    templateNo: templateNo,
+  };
+
+  chrome.runtime.sendMessage(
+    { action: "sendData", payload: data },
+    (response) => {
+      console.log("Background script response:", response);
+    }
+  );
+  console.log("We run start to commit  message");
+}
+
 // Add an event listener for keypress
 // 查找所有按钮并为每个按钮添加点击事件监听器
-async function commitInfo(templateNo) {
+async function commitInfoLinkedIn(templateNo) {
   let companyName = document.querySelector(
     "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(1) > div > div.relative.job-details-jobs-unified-top-card__container--two-pane > div > div.display-flex.align-items-center > div.display-flex.align-items-center.flex-1 > div"
   );

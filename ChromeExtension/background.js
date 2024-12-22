@@ -5,6 +5,8 @@ chrome.runtime.onInstalled.addListener(() => {
       matches: [
         "https://www.linkedin.com/",
         "https://linkedin.com/",
+        "https://www.seek.com.au/",
+        "https://www.seek.co.nz/",
         "https://manyouglobal.com/",
       ], // Replace with the specific website's URL
       js: ["content.js"],
@@ -18,7 +20,7 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (
     changeInfo.status === "complete" &&
-    tab.url.includes("linkedin.com/jobs")
+    (tab.url.includes("linkedin.com/jobs") || tab.url.includes("seek.co"))
   ) {
     chrome.scripting.executeScript(
       {
@@ -31,7 +33,10 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 chrome.action.onClicked.addListener((tab) => {
-  if (tab.url && tab.url.includes("linkedin.com/jobs")) {
+  if (
+    tab.url &&
+    (tab.url.includes("linkedin.com/jobs") || tab.url.includes("seek.co"))
+  ) {
     console.log("Injecting script into:", tab.url);
     chrome.scripting.executeScript({
       target: { tabId: tab.id },

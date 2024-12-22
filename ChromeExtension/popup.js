@@ -1,7 +1,7 @@
 document.getElementById("actionButton").addEventListener("click", () => {
   // 向 background.js 发送消息
   chrome.runtime.sendMessage({ action: "doSomething" }, (response) => {
-    document.getElementById("status").innerText = `Status: ${response.status}`;
+    document.getElementById("status").innerText = `Inject success`;
   });
 });
 
