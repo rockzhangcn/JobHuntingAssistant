@@ -71,9 +71,9 @@ async function commitInfoSeek(templateNo) {
     "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div > div:nth-child(1) > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwb7 > div > span"
   );
 
-  // let jobDesc = document.querySelector(
-  //   "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw77 > section:nth-child(2) > div > div > div"
-  // );
+  let jobDesc = document.querySelector(
+    "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw77 > section:nth-child(2) > div > div > div"
+  );
 
   let hireManager = document.querySelector(
     "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(2) > div > div > div > div.hirer-card__hirer-information > a > span > span:nth-child(1) > strong"
@@ -97,6 +97,7 @@ async function commitInfoSeek(templateNo) {
     manager: hireManager,
     city: cityName.innerText,
     templateNo: templateNo,
+    jobDesc: jobDesc.innerText,
   };
 
   chrome.runtime.sendMessage(
@@ -128,6 +129,8 @@ async function commitInfoLinkedIn(templateNo) {
   );
   hireManager = hireManager ? hireManager.innerText : "Hiring Manager";
 
+  let jobDesc = document.querySelector("#job-details");
+
   console.log(
     "Rockzhang We get companyName " +
       companyName.innerText +
@@ -145,6 +148,7 @@ async function commitInfoLinkedIn(templateNo) {
     manager: hireManager,
     city: cityName.innerText,
     templateNo: templateNo,
+    jobDesc: jobDesc.innerText,
   };
 
   chrome.runtime.sendMessage(

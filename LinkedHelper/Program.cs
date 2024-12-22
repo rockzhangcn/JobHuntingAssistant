@@ -77,6 +77,7 @@ app.MapPost("/position_info",  async (HttpContext httpContext) =>
     var hiringNanager = "Hiring Manager";
     var city = "Auckland";
     var templateNo = 1;
+    var jobDesc = "";
     //TODO removed after client get correct logics.
     try {
         position = jsonData.GetProperty("position").GetString();
@@ -84,8 +85,10 @@ app.MapPost("/position_info",  async (HttpContext httpContext) =>
         hiringNanager = jsonData.GetProperty("manager").GetString();
         city = jsonData.GetProperty("city").GetString();
         templateNo = jsonData.GetProperty("templateNo").GetInt32();
+        jobDesc = jsonData.GetProperty("jobDesc").GetString();
     } catch (KeyNotFoundException) {
         Console.WriteLine("Key Now Found in the post data");
+        return Results.NoContent();
     }
 
     string[] segments = city.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -98,7 +101,7 @@ app.MapPost("/position_info",  async (HttpContext httpContext) =>
 
     string todayDate = DateTime.Now.ToString("MMM dd, yyyy");
 
-    Console.WriteLine($"We get information position:\"{position}\", company:\"{company}\", name:\"{hiringNanager}\"");
+    Console.WriteLine($"We get information position:\"{position}\", company:\"{company}\", JobDesc:\"{jobDesc}\",name:\"{hiringNanager}\"");
     
     string inputPath = $"CoverLetter_template_{templateNo}.docx";
     string outputDocPath = $"CoverLetter_fit_{templateNo}.docx";
