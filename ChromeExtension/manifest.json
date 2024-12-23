@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "JobApplyHelper",
+  "name": "AutoCoverletter",
   "version": "1.0",
-  "description": "Extract position information that needed in a cover letter.",
+  "description": "Auttomatically generate a cover letter adapts to current position.",
   "permissions": [
     "activeTab",
     "scripting",
