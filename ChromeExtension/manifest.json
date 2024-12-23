@@ -41,6 +41,13 @@
     "extension_pages": "script-src 'self'; object-src 'self';"
   },
 
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+
   "action": {
     "default_title": "AutoCoverletter",
     "default_popup": "popup.html",
