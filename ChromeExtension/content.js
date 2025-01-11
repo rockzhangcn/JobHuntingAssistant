@@ -60,19 +60,19 @@ async function commitInfo(templateNo) {
 
 async function commitInfoSeek(templateNo) {
   let companyName = document.querySelector(
-    "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div > button > span"
+    "#app > div > div:nth-child(8) > div > div > div.snwpn00.l1r11897._1l99f8818._1l99f881b.l1r11833.l1r11836 > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r118b3.l1r118aw.l1r118bl.l1r1189z.l1r1189s.l1r118ah > div > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div:nth-child(2) > div > div > button"
   );
 
   let positionName = document.querySelector(
-    "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > h1 > a"
+    "#app > div > div:nth-child(8) > div > div > div.snwpn00.l1r11897._1l99f8818._1l99f881b.l1r11833.l1r11836 > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r118b3.l1r118aw.l1r118bl.l1r1189z.l1r1189s.l1r118ah > div > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div:nth-child(2) > div > h1"
   );
 
   let cityName = document.querySelector(
-    "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div > div:nth-child(1) > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwb7 > div > span"
+    "#app > div > div:nth-child(8) > div > div > div.snwpn00.l1r11897._1l99f8818._1l99f881b.l1r11833.l1r11836 > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r118b3.l1r118aw.l1r118bl.l1r1189z.l1r1189s.l1r118ah > div > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div > div:nth-child(1) > div.snwpn00.l1r1184z.l1r118r.l1r118p.l1r118i3.l1r118b7 > div > span"
   );
 
   let jobDesc = document.querySelector(
-    "#app > div > div:nth-child(9) > div > section > div:nth-child(2) > div > div > div._1unphw40.tcmsgwn > div > div > div > div > div._1unphw40.tcmsgw4z.tcmsgwr.tcmsgwp.tcmsgwi3.tcmsgwbv.tcmsgwbp.tcmsgw8j.jsag8p0 > div > div > div:nth-child(3) > div > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw6z > div:nth-child(2) > div > div._1unphw40.tcmsgw5b.tcmsgwhf.tcmsgw77 > section:nth-child(2) > div > div > div"
+    "#app > div > div:nth-child(8) > div > div > div.snwpn00.l1r11897._1l99f8818._1l99f881b.l1r11833.l1r11836 > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r118b3.l1r118aw.l1r118bl.l1r1189z.l1r1189s.l1r118ah > div > div.snwpn00.l1r1185b.l1r118hf.l1r11877 > section:nth-child(1) > div > div:nth-child(1) > div"
   );
 
   let hireManager = document.querySelector(
