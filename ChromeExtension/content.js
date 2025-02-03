@@ -59,21 +59,19 @@ async function commitInfo(templateNo) {
 }
 
 async function commitInfoSeek(templateNo) {
-  let companyName = document.querySelector(
-    "#app > div > div:nth-child(8) > div > div > div.snwpn00.l1r11897._1l99f8818._1l99f881b.l1r11833.l1r11836 > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r118b3.l1r118aw.l1r118bl.l1r1189z.l1r1189s.l1r118ah > div > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div:nth-child(2) > div > div > button"
+  const companyName = document.querySelector(
+    '[data-automation="advertiser-name"]'
   );
 
   let positionName = document.querySelector(
-    "#app > div > div:nth-child(8) > div > div > div.snwpn00.l1r11897._1l99f8818._1l99f881b.l1r11833.l1r11836 > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r118b3.l1r118aw.l1r118bl.l1r1189z.l1r1189s.l1r118ah > div > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div:nth-child(2) > div > h1"
+    '[data-automation="job-detail-title"]'
   );
 
   let cityName = document.querySelector(
-    "#app > div > div:nth-child(8) > div > div > div.snwpn00.l1r11897._1l99f8818._1l99f881b.l1r11833.l1r11836 > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r118b3.l1r118aw.l1r118bl.l1r1189z.l1r1189s.l1r118ah > div > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div > div:nth-child(1) > div.snwpn00.l1r1184z.l1r118r.l1r118p.l1r118i3.l1r118b7 > div > span"
+    '[data-automation="job-detail-location"]'
   );
 
-  let jobDesc = document.querySelector(
-    "#app > div > div:nth-child(8) > div > div > div.snwpn00.l1r11897._1l99f8818._1l99f881b.l1r11833.l1r11836 > div.snwpn00.l1r1185b.l1r118hf.l1r1186z > div.snwpn00.l1r118b3.l1r118aw.l1r118bl.l1r1189z.l1r1189s.l1r118ah > div > div.snwpn00.l1r1185b.l1r118hf.l1r11877 > section:nth-child(1) > div > div:nth-child(1) > div"
-  );
+  let jobDesc = document.querySelector('[data-automation="jobAdDetails"]');
 
   let hireManager = document.querySelector(
     "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(2) > div > div > div > div.hirer-card__hirer-information > a > span > span:nth-child(1) > strong"
@@ -113,21 +111,24 @@ async function commitInfoSeek(templateNo) {
 // 查找所有按钮并为每个按钮添加点击事件监听器
 async function commitInfoLinkedIn(templateNo) {
   let companyName = document.querySelector(
-    "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(1) > div > div.relative.job-details-jobs-unified-top-card__container--two-pane > div > div.display-flex.align-items-center > div.display-flex.align-items-center.flex-1 > div"
+    ".job-details-jobs-unified-top-card__company-name"
   );
 
   let positionName = document.querySelector(
-    "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(1) > div > div.relative.job-details-jobs-unified-top-card__container--two-pane > div > div.display-flex.justify-space-between.flex-wrap.mt2 > div > h1"
+    ".job-details-jobs-unified-top-card__job-title"
   );
 
   let cityName = document.querySelector(
-    "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(1) > div > div.relative.job-details-jobs-unified-top-card__container--two-pane > div > div.job-details-jobs-unified-top-card__primary-description-container > div > span:nth-child(1)"
+    ".job-details-jobs-unified-top-card__primary-description-container"
   );
 
+  cityName = cityName.querySelectorAll("span")[0];
+
   let hireManager = document.querySelector(
-    "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(2) > div > div > div > div.hirer-card__hirer-information > a > span > span:nth-child(1) > strong"
+    ".hirer-card__hirer-information > a"
   );
-  hireManager = hireManager ? hireManager.innerText : "Hiring Manager";
+
+  hireManager = hireManager ? hireManager.innerText.trim() : "Hiring Manager";
 
   let jobDesc = document.querySelector("#job-details");
 
