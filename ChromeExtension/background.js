@@ -33,6 +33,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 chrome.action.onClicked.addListener((tab) => {
+  console.log("User click the browser icon");
   if (
     tab.url &&
     (tab.url.includes("linkedin.com/jobs") || tab.url.includes("seek.co"))
