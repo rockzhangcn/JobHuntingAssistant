@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>AutoCoverletter</title>
 
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 10px;
-        width: 300px;
-      }
-      button {
-        margin: 5px 0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>AutoCoverletter</h1>
-    <button id="actionButton">Inject JS</button>
-    <div id="status">Waiting js injected</div>
-    <script src="popup.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>AutoCoverletter</title>
+
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+      width: 300px;
+    }
+
+    button {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+
+<body style="background-color:azure;">
+  <h3>AutoCoverletter</h3>
+  <a target="_blank" href="https://rockzhang.com/">Website Entry</a>
+  <br>
+  <br>
+  <a target="_blank" href="mailto:rock.zhang.cn@gmail.com">Contact Me</a>
+  <br>
+  <br>
+  <button id="updateMenu">Update Templates Menu</button>
+  <br>
+  <br>
+  <label>
+    API Key: <br><input id="apiKey" type="text" />
+  </label>
+  <br>
+  <button id="saveBtn">Save</button>
+
+  <script src="options.js"> </script>
+  <script src="popup.js"></script>
+</body>
+
 </html>

@@ -44,7 +44,17 @@ if (window.hasLinkedExtensionRun) {
     }
   });
 
-  createUI();
+
+  chrome.storage.local.get(["refineVersion"], (result) => {
+    if (chrome.runtime.lastError) {
+      createUI(["Error Occurred", "Please Refresh"]);
+    } else {
+      const arrOfObjects = result.refineVersion || ["No API Key", "Please set in Options"];
+      const namesArray = arrOfObjects.map(item => item.name);
+      createUI(namesArray);
+    }
+  });
+
   // 你的脚本逻辑在这里运行
   console.log("Rockzhang Content script successfully injected.");
 }
@@ -57,6 +67,7 @@ async function commitInfo(templateNo) {
     await commitInfoLinkedIn(templateNo);
   }
 }
+
 
 async function commitInfoSeek(templateNo) {
   const companyName = document.querySelector(
@@ -80,13 +91,13 @@ async function commitInfoSeek(templateNo) {
 
   console.log(
     "Rockzhang We get companyName " +
-      companyName.innerText +
-      " posistion name " +
-      positionName.innerText +
-      " city name " +
-      cityName.innerText +
-      " hiring manager " +
-      hireManager
+    companyName.innerText +
+    " posistion name " +
+    positionName.innerText +
+    " city name " +
+    cityName.innerText +
+    " hiring manager " +
+    hireManager
   );
 
   const data = {
@@ -134,13 +145,13 @@ async function commitInfoLinkedIn(templateNo) {
 
   console.log(
     "Rockzhang We get companyName " +
-      companyName.innerText +
-      " posistion name " +
-      positionName.innerText +
-      " city name " +
-      cityName.innerText +
-      " hiring manager " +
-      hireManager
+    companyName.innerText +
+    " posistion name " +
+    positionName.innerText +
+    " city name " +
+    cityName.innerText +
+    " hiring manager " +
+    hireManager
   );
 
   const data = {
@@ -161,25 +172,36 @@ async function commitInfoLinkedIn(templateNo) {
   console.log("We run start to commit  message");
 }
 
-// const observer1 = new MutationObserver(() => {
-//   let container = document.querySelector("#LinkedinHelper");
-//   if (!container) {
-//     createUI();
-//     console.log("ROCK UI created.");
-//   }
-// });
+async function getUserConfiguredTemplate() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["refineVersion"], (result) => {
+      if (chrome.runtime.lastError) {
+        resolve(null);
+      } else {
+        resolve(result.apiKey || null);
+      }
+    });
+  });
+}
 
-// // 开始监听页面的 DOM 变化
-// observer1.observe(document.body, { childList: true, subtree: true });
-
-function createUI() {
+function createUI(menus) {
   let container = document.querySelector("#LinkedinHelper");
   if (container) {
     console.log("UI already exists, skipping creation.");
     return;
   }
 
-  const menus = ["C/C++", "Full Stack", "Android(Java)"];
+  let templates = null;
+  (async () => {
+    templates = await getUserConfiguredTemplate();
+    if (refineVersion) {
+      console.log("Loaded data:", refineVersion);
+      // 注入页面
+    } else {
+      console.log("No data found.");
+    }
+  })();
+
 
   const divContainer = document.createElement("div");
 
@@ -269,24 +291,3 @@ function createUI() {
   document.body.appendChild(divContainer);
 }
 
-// createUI();
-// const observeDOM = (selector, callback) => {
-//   const observer = new MutationObserver(() => {
-//     const element = document.querySelector(selector);
-//     if (element) {
-//       callback(element);
-//       observer.disconnect(); // 找到元素后停止观察
-//     }
-//   });
-
-//   observer.observe(document.body, { childList: true, subtree: true });
-// };
-
-// console.warn("We are running in content.js");
-// // 监听 LinkedIn 页面中的目标元素
-// observeDOM(
-//   "#main > div > div.scaffold-layout__list-detail-inner.scaffold-layout__list-detail-inner--grow > div.scaffold-layout__detail.overflow-x-hidden.jobs-search__job-details > div > div.jobs-search__job-details--container > div > div:nth-child(1) > div > div:nth-child(1) > div > div.relative.job-details-jobs-unified-top-card__container--two-pane > div > div.display-flex.align-items-center > div.display-flex.align-items-center.flex-1 > div > a",
-//   (element) => {
-//     console.log("Company Name:", element.innerText);
-//   }
-// );

@@ -48,6 +48,17 @@ chrome.action.onClicked.addListener((tab) => {
   }
 });
 
+function getApiKey() {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get(['apiKey'], (result) => {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(result.apiKey || null);
+      }
+    });
+  });
+}
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.action === "doSomething") {
     console.log("Popup triggered an action.");
@@ -61,10 +72,22 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // });
     // return true; // 表示异步响应
     sendResponse({ success: true });
-    const response = await fetch("http://localhost:5218/position_info", {
+    const apiKey = await getApiKey();
+    if (!apiKey) {
+      sendResponse({ text: "API key not found." });
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          func: () => alert("API Key not found")
+        });
+      });
+      return true; // 表示异步响应
+    }
+    const response = await fetch("https://rockzhang.com/api/job/submit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // 设置请求头，声明发送的是 JSON 数据
+        "Authorization": "Bearer " + apiKey,
       },
       body: JSON.stringify(data),
     })

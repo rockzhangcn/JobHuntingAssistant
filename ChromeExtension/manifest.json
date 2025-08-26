@@ -9,7 +9,8 @@
     "downloads",
     "declarativeContent",
     "tabs",
-    "background"
+    "background",
+    "storage"
   ],
   "background": {
     "service_worker": "background.js"
@@ -32,6 +33,7 @@
   "host_permissions": [
     "https://www.linkedin.com/",
     "https://linkedin.com/",
+    "https://rockzhang.com/",
     "https://www.seek.com.au/",
     "https://www.seek.co.nz/",
     "https://manyouglobal.com/",
