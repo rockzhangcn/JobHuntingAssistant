@@ -23,9 +23,11 @@
         "https://www.seek.com.au/",
         "https://www.seek.co.nz/",
         "https://manyouglobal.com/",
-        "http://localhost:5218/"
+        "http://localhost:5048/"
       ],
-      "js": ["content.js"],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_end",
       "all_frames": true
     }
@@ -37,19 +39,17 @@
     "https://www.seek.com.au/",
     "https://www.seek.co.nz/",
     "https://manyouglobal.com/",
-    "http://localhost:5218/*"
+    "http://localhost:5048/"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   },
-
   "icons": {
     "16": "icon.png",
     "32": "icon.png",
     "48": "icon.png",
     "128": "icon.png"
   },
-
   "action": {
     "default_title": "AutoCoverletter",
     "default_popup": "popup.html",

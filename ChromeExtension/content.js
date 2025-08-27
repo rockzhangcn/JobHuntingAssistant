@@ -59,17 +59,17 @@ if (window.hasLinkedExtensionRun) {
   console.log("Rockzhang Content script successfully injected.");
 }
 
-async function commitInfo(templateNo) {
+async function commitInfo(templateName) {
   let hostName = document.location.hostname;
   if (hostName.indexOf("seek.co") !== -1) {
-    commitInfoSeek(templateNo);
+    commitInfoSeek(templateName);
   } else if (hostName.indexOf("linkedin.com") !== -1) {
-    await commitInfoLinkedIn(templateNo);
+    await commitInfoLinkedIn(templateName);
   }
 }
 
 
-async function commitInfoSeek(templateNo) {
+async function commitInfoSeek(templateName) {
   const companyName = document.querySelector(
     '[data-automation="advertiser-name"]'
   );
@@ -105,8 +105,9 @@ async function commitInfoSeek(templateNo) {
     position: positionName.innerText,
     manager: hireManager,
     city: cityName.innerText,
-    templateNo: templateNo,
+    templateName: templateName,
     jobDesc: jobDesc.innerText,
+    source: "seek",
   };
 
   chrome.runtime.sendMessage(
@@ -120,7 +121,7 @@ async function commitInfoSeek(templateNo) {
 
 // Add an event listener for keypress
 // 查找所有按钮并为每个按钮添加点击事件监听器
-async function commitInfoLinkedIn(templateNo) {
+async function commitInfoLinkedIn(templateName) {
   let companyName = document.querySelector(
     ".job-details-jobs-unified-top-card__company-name"
   );
@@ -159,8 +160,9 @@ async function commitInfoLinkedIn(templateNo) {
     position: positionName.innerText,
     manager: hireManager,
     city: cityName.innerText,
-    templateNo: templateNo,
+    templateName: templateName,
     jobDesc: jobDesc.innerText,
+    source: "LinkedIn",
   };
 
   chrome.runtime.sendMessage(
@@ -172,36 +174,12 @@ async function commitInfoLinkedIn(templateNo) {
   console.log("We run start to commit  message");
 }
 
-async function getUserConfiguredTemplate() {
-  return new Promise((resolve) => {
-    chrome.storage.local.get(["refineVersion"], (result) => {
-      if (chrome.runtime.lastError) {
-        resolve(null);
-      } else {
-        resolve(result.apiKey || null);
-      }
-    });
-  });
-}
-
 function createUI(menus) {
   let container = document.querySelector("#LinkedinHelper");
   if (container) {
     console.log("UI already exists, skipping creation.");
     return;
   }
-
-  let templates = null;
-  (async () => {
-    templates = await getUserConfiguredTemplate();
-    if (refineVersion) {
-      console.log("Loaded data:", refineVersion);
-      // 注入页面
-    } else {
-      console.log("No data found.");
-    }
-  })();
-
 
   const divContainer = document.createElement("div");
 
@@ -281,7 +259,7 @@ function createUI(menus) {
     });
 
     button.addEventListener("click", async () => {
-      await commitInfo(index + 1);
+      await commitInfo(value);
       //alert("Menu " + value + " is clicked.");
     });
 
