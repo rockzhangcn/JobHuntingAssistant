@@ -122,7 +122,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         sendResponse({ success: true });
       })
       .catch((error) => {
-        console.error("Rockzhang Download failed:", error);
+        console.info("Download failed:", error);
         sendResponse({ success: false });
       });
 

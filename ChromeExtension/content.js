@@ -21,11 +21,11 @@ if (window.hasLinkedExtensionRun) {
         // Reconstruct Blob
         const blob = new Blob([arrayBuffer], { type: mimeType });
         const blobUrl = URL.createObjectURL(blob);
-
+        let company_postfix = name.replace(/\s+/g, "_");
         // Trigger download
         const a = document.createElement("a");
         a.href = blobUrl;
-        a.download = "RockZhang_CoverLetter_" + name + ".pdf";
+        a.download = window.userPrefix + "_" + company_postfix + ".pdf";
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -45,13 +45,14 @@ if (window.hasLinkedExtensionRun) {
   });
 
 
-  chrome.storage.local.get(["refineVersion"], (result) => {
+  chrome.storage.local.get(["TemplatesArray", "userPrefix"], (result) => {
     if (chrome.runtime.lastError) {
       createUI(["Error Occurred", "Please Refresh"]);
     } else {
-      const arrOfObjects = result.refineVersion || ["No API Key", "Please set in Options"];
+      const arrOfObjects = result.TemplatesArray || ["No API Key", "Please set in Options"];
       const namesArray = arrOfObjects.map(item => item.name);
       createUI(namesArray);
+      window.userPrefix = result.userPrefix || "Please_set_in_Options";
     }
   });
 

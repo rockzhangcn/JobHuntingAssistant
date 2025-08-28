@@ -36,13 +36,11 @@ updateMenu.addEventListener('click', () => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
-
           return response.json();
         })
         .then(data => {
-          chrome.storage.local.set({ refineVersion: data.data }, () => {
+          chrome.storage.local.set({ TemplatesArray: data.data, userPrefix: data.prefix }, () => {
             console.log("Saved user menus");
-
             chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               if (tabs[0] && tabs[0].id) {
                 chrome.tabs.reload(tabs[0].id, {}, () => {
