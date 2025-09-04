@@ -28,7 +28,7 @@ updateMenu.addEventListener('click', () => {
         method: 'GET',
         headers: {
           Authorization:
-            "Bearer " + result.apiKey, // 使用从 storage 中获取的 API 密钥
+            "Bearer " + result.apiKey,
           "Content-Type": "application/json"
         }
       })

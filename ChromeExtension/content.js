@@ -4,6 +4,7 @@ if (window.hasLinkedExtensionRun) {
   window.hasLinkedExtensionRun = true;
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "receiveBlob") {
+      removeRockSpinner();
       const { buffer, mimeType, name } = message;
       if (Array.isArray(buffer)) {
         const arrayBuffer = new Uint8Array(buffer).buffer; // Reconstruct the ArrayBuffer
@@ -43,8 +44,6 @@ if (window.hasLinkedExtensionRun) {
       window.userPrefix = result.userPrefix || "Please_set_in_Options";
     }
   });
-
-  // 你的脚本逻辑在这里运行
 }
 
 async function commitInfo(templateName) {
@@ -55,7 +54,6 @@ async function commitInfo(templateName) {
     await commitInfoLinkedIn(templateName);
   }
 }
-
 
 async function commitInfoSeek(templateName) {
   const companyName = document.querySelector(
@@ -95,7 +93,6 @@ async function commitInfoSeek(templateName) {
 }
 
 // Add an event listener for keypress
-// 查找所有按钮并为每个按钮添加点击事件监听器
 async function commitInfoLinkedIn(templateName) {
   let companyName = document.querySelector(
     ".job-details-jobs-unified-top-card__company-name"
@@ -220,6 +217,7 @@ function createUI(menus) {
     });
 
     button.addEventListener("click", async () => {
+      progressOn();
       await commitInfo(value);
       //alert("Menu " + value + " is clicked.");
     });
@@ -230,3 +228,26 @@ function createUI(menus) {
   document.body.appendChild(divContainer);
 }
 
+function progressOn() {
+  const overlay = document.createElement('div');
+  overlay.id = 'rock-spinner';
+  Object.assign(overlay.style, {
+    position: 'fixed', inset: '0', display: 'grid', placeItems: 'center',
+    background: 'rgba(0,0,0,.08)', zIndex: 2147483647
+  });
+
+  const spinner = document.createElement('div');
+  Object.assign(spinner.style, {
+    width: '164px', height: '164px', border: '16px solid #ccc',
+    borderTopColor: '#007bff', borderRadius: '50%',
+    animation: 'rockspin 1s linear infinite'
+  });
+
+  const style = document.createElement('style');
+  style.textContent = '@keyframes rockspin{to{transform:rotate(360deg)}}';
+
+  overlay.appendChild(spinner);
+  document.body.append(overlay, style);
+
+  window.removeRockSpinner = () => overlay.remove();
+}
