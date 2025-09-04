@@ -30,10 +30,10 @@
     }
   ],
   "host_permissions": [
-    "https://www.linkedin.com/",
-    "https://www.seek.com.au/",
-    "https://www.seek.co.nz/",
-    "https://languagetojob.com/"
+    "https://www.linkedin.com/*",
+    "https://www.seek.com.au/*",
+    "https://www.seek.co.nz/*",
+    "https://languagetojob.com/*"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
