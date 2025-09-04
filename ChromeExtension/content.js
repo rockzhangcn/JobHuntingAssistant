@@ -5,19 +5,8 @@ if (window.hasLinkedExtensionRun) {
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "receiveBlob") {
       const { buffer, mimeType, name } = message;
-      console.log(
-        "Rockzhang receivedBlob with buffer size ",
-        buffer.length,
-        " mimeType ",
-        mimeType
-      );
       if (Array.isArray(buffer)) {
         const arrayBuffer = new Uint8Array(buffer).buffer; // Reconstruct the ArrayBuffer
-        console.log(
-          "Reconstructed ArrayBuffer byteLength:",
-          arrayBuffer.byteLength
-        );
-
         // Reconstruct Blob
         const blob = new Blob([arrayBuffer], { type: mimeType });
         const blobUrl = URL.createObjectURL(blob);
@@ -36,7 +25,6 @@ if (window.hasLinkedExtensionRun) {
           message: "Blob processed and file downloaded!",
         });
       } else {
-        console.error("Rockzhang Invalid buffer format received.");
         sendResponse({ success: false, error: "Invalid buffer format." });
       }
 
@@ -57,7 +45,6 @@ if (window.hasLinkedExtensionRun) {
   });
 
   // 你的脚本逻辑在这里运行
-  console.log("Rockzhang Content script successfully injected.");
 }
 
 async function commitInfo(templateName) {
@@ -90,17 +77,6 @@ async function commitInfoSeek(templateName) {
   );
   hireManager = hireManager ? hireManager.innerText : "Hiring Manager";
 
-  console.log(
-    "Rockzhang We get companyName " +
-    companyName.innerText +
-    " posistion name " +
-    positionName.innerText +
-    " city name " +
-    cityName.innerText +
-    " hiring manager " +
-    hireManager
-  );
-
   const data = {
     company: companyName.innerText,
     position: positionName.innerText,
@@ -114,10 +90,8 @@ async function commitInfoSeek(templateName) {
   chrome.runtime.sendMessage(
     { action: "sendData", payload: data },
     (response) => {
-      console.log("Background script response:", response);
     }
   );
-  console.log("We run start to commit  message");
 }
 
 // Add an event listener for keypress
@@ -145,17 +119,6 @@ async function commitInfoLinkedIn(templateName) {
 
   let jobDesc = document.querySelector("#job-details");
 
-  console.log(
-    "Rockzhang We get companyName " +
-    companyName.innerText +
-    " posistion name " +
-    positionName.innerText +
-    " city name " +
-    cityName.innerText +
-    " hiring manager " +
-    hireManager
-  );
-
   const data = {
     company: companyName.innerText,
     position: positionName.innerText,
@@ -169,16 +132,13 @@ async function commitInfoLinkedIn(templateName) {
   chrome.runtime.sendMessage(
     { action: "sendData", payload: data },
     (response) => {
-      console.log("Background script response:", response);
     }
   );
-  console.log("We run start to commit  message");
 }
 
 function createUI(menus) {
   let container = document.querySelector("#LinkedinHelper");
   if (container) {
-    console.log("UI already exists, skipping creation.");
     return;
   }
 

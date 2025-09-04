@@ -40,11 +40,9 @@ updateMenu.addEventListener('click', () => {
         })
         .then(data => {
           chrome.storage.local.set({ TemplatesArray: data.data, userPrefix: data.prefix }, () => {
-            console.log("Saved user menus");
             chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               if (tabs[0] && tabs[0].id) {
                 chrome.tabs.reload(tabs[0].id, {}, () => {
-                  console.log("Current tab reloaded");
                 });
               }
             });
@@ -52,7 +50,6 @@ updateMenu.addEventListener('click', () => {
           });
         })
         .catch(err => {
-          console.error('Fetch failed:', err);
         });
     }
   });

@@ -13,8 +13,6 @@ chrome.runtime.onInstalled.addListener(() => {
       runAt: "document_end",
     },
   ]);
-
-  console.log("We are running here in background.js");
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
@@ -33,18 +31,14 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 chrome.action.onClicked.addListener((tab) => {
-  console.log("User click the browser icon");
   if (
     tab.url &&
     (tab.url.includes("linkedin.com/jobs") || tab.url.includes("seek.co"))
   ) {
-    console.log("Injecting script into:", tab.url);
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
       files: ["content.js"],
     });
-  } else {
-    console.warn("Active tab is not a valid target:", tab.url);
   }
 });
 
@@ -61,7 +55,6 @@ function getApiKey() {
 }
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.action === "doSomething") {
-    console.log("Popup triggered an action.");
     sendResponse({ status: "Action completed" });
   } else if (message.action === "sendData") {
     const data = message.payload;
@@ -96,17 +89,12 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        console.log("Rockzhang Response status:", response.status);
-        console.log("Rockzhang Response headers:", [...response.headers]);
         return response.blob();
       })
       .then((blob) => {
-        console.log("Rockzhang Blob size:", blob.size); // Should be greater than 0
-        console.log("Rockzhang Blob type:", blob.type);
 
         // Convert Blob to ArrayBuffer
         blob.arrayBuffer().then((buffer) => {
-          console.log("Rockzhang ArrayBuffer length:", buffer.byteLength);
           chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (tabs.length > 0) {
               chrome.tabs.sendMessage(tabs[0].id, {
@@ -122,7 +110,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         sendResponse({ success: true });
       })
       .catch((error) => {
-        console.info("Download failed:", error);
         sendResponse({ success: false });
       });
 
