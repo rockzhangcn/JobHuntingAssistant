@@ -19,11 +19,8 @@
     {
       "matches": [
         "https://www.linkedin.com/",
-        "https://linkedin.com/",
         "https://www.seek.com.au/",
-        "https://www.seek.co.nz/",
-        "https://manyouglobal.com/",
-        "http://localhost:5048/"
+        "https://www.seek.co.nz/"
       ],
       "js": [
         "content.js"
@@ -34,12 +31,9 @@
   ],
   "host_permissions": [
     "https://www.linkedin.com/",
-    "https://linkedin.com/",
-    "https://rockzhang.com/",
     "https://www.seek.com.au/",
     "https://www.seek.co.nz/",
-    "https://manyouglobal.com/",
-    "http://localhost:5048/"
+    "https://languagetojob.com/"
   ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"

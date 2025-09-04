@@ -83,7 +83,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       });
       return true; // 表示异步响应
     }
-    const response = await fetch("https://rockzhang.com/api/job/submit", {
+    const response = await fetch("https://languagetojob.com/api/job/submit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // 设置请求头，声明发送的是 JSON 数据
