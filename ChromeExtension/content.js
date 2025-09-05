@@ -146,9 +146,9 @@ function createUI(menus) {
   divContainer.style.right = "1.5vh"; // 距离页面右侧 20px
   divContainer.style.top = "50%"; // 距离页面顶部 50%
   divContainer.style.transform = "translateY(-50%)"; // 垂直居中调整
-  divContainer.style.backgroundColor = "#AAAAAA33"; // 按钮背景颜色
+  divContainer.style.backgroundColor = "#AA888833"; // 按钮背景颜色
   divContainer.style.color = "white"; // 按钮文字颜色
-  divContainer.style.padding = "10px 20px"; // 按钮内边距
+  divContainer.style.padding = "10px 10px"; // 按钮内边距
   divContainer.style.borderRadius = "5px"; // 圆角效果
   divContainer.style.zIndex = "1000"; // 确保按钮浮动在页面内容上方
   divContainer.style.display = "flex";
@@ -173,7 +173,7 @@ function createUI(menus) {
   closeButton.style.justifyContent = "center"; // 水平居中
   closeButton.style.alignItems = "center"; // 垂直居中
   closeButton.style.cursor = "pointer"; // 鼠标悬停时显示手型
-  closeButton.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.2)"; // 按钮阴影
+  closeButton.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.2)"; // 按钮阴影
 
   // 添加鼠标悬停效果
   closeButton.addEventListener("mouseover", () => {
